@@ -300,12 +300,6 @@ function about() {
     // * setup timers to add random events to a queue
     // * update the Datamap
 
-	var usamap = new Datamap({
-		scope: 'usa',
-		element: document.getElementById('container2'),
-	})
-
-
     var map = new Datamap({
 
         scope: 'world',
@@ -338,7 +332,7 @@ function about() {
     d3.tsv("country_centroids_primary.csv", function(data) { centers = data; });
     d3.csv("samplatlong.csv", function(data) { slatlong = data; });
     d3.csv("cnlatlong.csv", function(data) { cnlatlong = data; });
-
+	
     // setup structures for the "hits" (arcs)
     // and circle booms
 
