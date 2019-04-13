@@ -99,9 +99,10 @@ body {
 <script src="https://d3js.org/d3.geo.projection.v0.min.js"></script>
 <script src="https://d3js.org/topojson.v1.min.js"></script>
 <script src="https://datamaps.github.io/scripts/datamaps.world.min.js?v=1"></script>
-<script src="https://raw.githubusercontent.com/markmarkoh/datamaps/master/dist/datamaps.usa.min.js"></script>
 <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 <script src="jquery.simplemodal-1.4.4.js"></script>
+
+<script src="http://datamaps.github.io/scripts/0.4.4/datamaps.usa.min.js"></script>
 
 <script>
 function about() {
@@ -126,6 +127,7 @@ function about() {
   <audio id="timallen" src="timallen.wav" preload="auto"></audio>
 
   <center><div id="container1"></div></center>
+  <center><div id="container2"></div></center>
   <div id="titlediv">Delogrand Attack Map</div>
   <div id="attackdiv"></div>
   <div id="aboutdiv"><i class="fa fa-question-circle fa-2x" onClick="about();"></i></div>
@@ -306,9 +308,15 @@ function about() {
     // * setup timers to add random events to a queue
     // * update the Datamap
 
+	var usamap = new Datamap({
+		scope: 'usa',
+		element: document.getElementById('container2'),
+	})
+
+
     var map = new Datamap({
 
-        scope: 'usa',
+        scope: 'world',
         element: document.getElementById('container1'),
         projection: 'winkel3',
         // change the projection to something else only if you have absolutely no cartographic sense
