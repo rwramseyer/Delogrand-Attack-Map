@@ -98,7 +98,7 @@ body {
 <script src="https://d3js.org/d3.v3.min.js"></script>
 <script src="https://d3js.org/d3.geo.projection.v0.min.js"></script>
 <script src="https://d3js.org/topojson.v1.min.js"></script>
-<script src="https://datamaps.github.io/scripts/datamaps.usa.min.js"></script>
+<script src="https://datamaps.github.io/scripts/datamaps.world.min.js?v=1"></script>
 <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 <script src="jquery.simplemodal-1.4.4.js"></script>
 
@@ -302,16 +302,16 @@ function about() {
 
     var map = new Datamap({
 
-        scope: 'usa',
+        scope: 'world',
         element: document.getElementById('container1'),
-        //projection: 'winkel3',
+        projection: 'winkel3',
         // change the projection to something else only if you have absolutely no cartographic sense
 
         fills: { defaultFill: 'black', },
 
         geographyConfig: {
           dataUrl: null,
-          //hideAntarctica: true,
+          hideAntarctica: true,
           borderWidth: 0.75,
           borderColor: '#4393c3',
           popupTemplate: function(geography, data) {
@@ -332,7 +332,6 @@ function about() {
     d3.tsv("country_centroids_primary.csv", function(data) { centers = data; });
     d3.csv("samplatlong.csv", function(data) { slatlong = data; });
     d3.csv("cnlatlong.csv", function(data) { cnlatlong = data; });
-	d3.csv("uslatlong.csv", function(data) { uslatlong = data; });
 	
     // setup structures for the "hits" (arcs)
     // and circle booms
@@ -367,30 +366,120 @@ function about() {
 
            if (typeof norse_mode !== 'undefined') { return; }
 
-           if (typeof random_mode !== 'undefined') { Math.floor((Math.random() * uslatlong.length)); }
+           if (typeof random_mode !== 'undefined') { Math.floor((Math.random() * slatlong.length)); }
 
-           dst = Math.floor((Math.random() * uslatlong.length));
-           src = Math.floor((Math.random() * uslatlong.length));
+           dst = Math.floor((Math.random() * slatlong.length));
+           src = Math.floor((Math.random() * slatlong.length));
 
            if ((dst == src)) {
             dst = src + 1 ;
-            if (dst > uslatlong.length-1) { dst = src - 1 }
+            if (dst > slatlong.length-1) { dst = src - 1 }
+           }
+
+           if (typeof allfx !== 'undefined') {
+             snd_id = audio_type[Math.floor((Math.random() * audio_type.length))];
+           }
+           // no guarantee of sound playing w/o the load - stupid browsers
+           if (typeof nofx === 'undefined') {
+             document.getElementById(snd_id).load();
+             document.getElementById(snd_id).play();
            }
 
            // add hit to the arc queue
            // use strokeColor to set arc line color
 
-           var srclat = uslatlong[src].lat;
-           var srclong = uslatlong[src].long;
-           var dstlat = uslatlong[dst].lat;
-           var dstlong = uslatlong[dst].long;
+           var srclat = slatlong[src].lat;
+           var srclong = slatlong[src].long;
+           var dstlat = slatlong[dst].lat;
+           var dstlong = slatlong[dst].long;
            which_attack = attack_type[Math.floor((Math.random() * attack_type.length))];
-           var srccountry = uslatlong[src]["country"];
+           var srccountry = slatlong[src]["country"];
+           // "Hi, Mandiant!!"
+           if (typeof china_mode !== 'undefined') {
+             srclat = cnlatlong[src].lat;
+             srclong = cnlatlong[src].long;
+             if (cnlatlong[src].country=="chn") { which_attack = "ZOMGOSH CHINA!!!!!!"; }
+             srccountry = cnlatlong[src]["country"];
+           }
+           // "Hi, Kim Jong!"
+           else if (typeof dprk_mode !== 'undefined') {
+             srclat = 39.0194;
+             srclong = 125.7381;
+             which_attack = "ZOMG NORTH KOREAZ!!!";
+             srccountry = "kp";
+           }
+           // source is always Chattanooga if chatt_mode is set
+           // "Hi ThreatStream!!" http://www.csoonline.com/article/2689609/network-security/threat-intelligence-firm-mistakes-research-for-nation-state-attack.html
+           else if (typeof chatt_mode !== 'undefined') {
+             srclat = 35.0456297;
+             srclong = -85.30968;
+             which_attack = "OMG NATION STATE CHATTANOOGA!!!";
+             srccountry = "usa";
+           }
+           // blame a former employee
+           else if (typeof employee_mode !== 'undefined') {
+             if (typeof in_lat !== 'undefined' && typeof in_lon !== 'undefined') {
+               srclat = in_lat;
+               srclong = in_lon;
+             }
+             which_attack = "Former employee attack"
+             if (typeof employee_fname !== 'undefined' && typeof employee_lname !== 'undefined') {
+               which_attack += ":" + employee_fname + " " + employee_lname;
+             }
+             srccountry = "usa";
+           }
+
+           // Specify a country
+           else if (typeof origin !== 'undefined') {
+             srccountry = origin.toUpperCase();
+             var center_id = 0;
+             for (i = 0; i < centers.length; i ++) {
+               center_id = i;
+               if (centers[i].FIPS10 === srccountry) {
+                break;
+               }
+             }
+
+             srccountry = origin.toLowerCase();
+             srclat = centers[center_id].LAT;
+             srclong = centers[center_id].LONG;
+           }
            
-           attackdiv_slatlong = uslatlong[dst]["country"];
+           // Specify a destination country
+           if (typeof destination !== 'undefined' && getDestination() < 80) {
+             dstcountry = destination.toUpperCase();
+             var center_id = 0;
+             for (i = 0; i < centers.length; i ++) {
+               center_id = i;
+               if (centers[i].FIPS10 === dstcountry) {
+                break;
+               }
+             }
+
+             dstcountry = destination.toLowerCase();
+             attackdiv_slatlong = dstcountry;
+             dstlat = centers[center_id].LAT;
+             dstlong = centers[center_id].LONG;
+           }
+           else {
+            attackdiv_slatlong = slatlong[dst]["country"];
+           }
 
            // Specify attack color
-           strokeColor = 'red';
+           if (typeof greenattacks !== 'undefined') {
+             strokeColor = 'green';
+           }
+           else if (typeof redattacks !== 'undefined') {
+             strokeColor = 'red';
+           }
+           else {
+             if (getStroke() < 70) {
+               strokeColor = 'green';
+             }
+             else {
+               strokeColor = 'red';
+             }
+           }
 
            if (typeof drill_mode != 'undefined') {
 
