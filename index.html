@@ -114,16 +114,6 @@ function about() {
 
 <body>
 
-  <audio id="starwars" src="Blaster-Solo.wav" preload="auto"></audio>
-  <audio id="tng" src="tng_torpedo_clean.mp3" preload="auto"></audio>
-  <audio id="b5" src="B5-interceptor1.wav" preload="auto"></audio>
-  <audio id="wargames" src="WarGames-KeyPress.wav" preload="auto"></audio>
-  <audio id="pew" src="pew.mp3" preload="auto"></audio>
-  <audio id="galaga" src="shot_sound.mp3" preload="auto"></audio>
-  <audio id="asteroids" src="asteroids.mp3" preload="auto"></audio>
-  <audio id="china" src="china.mp3" preload="auto"></audio>
-  <audio id="timallen" src="timallen.wav" preload="auto"></audio>
-
   <center><div id="container1"></div></center>
 
   <div id="titlediv">Delogrand Attack Map</div>
@@ -152,14 +142,10 @@ function about() {
     attack_max = 2000 ;
 
     // add/change the attack types here
-    attack_type = [ "any port scan in a storm", "ssh brutish force", "Thought Leader Tweet",
-                    "SYN FLOOD BA-BY", "Spotty", "Heartbleed Hotel", "Po_ODLE", "Sharknado",
-                    "CORGI Attack", "Ping of DOOM", "Conficker", "Goldfinger", "SANDPAPER",
-                    "SNAILshock", "Spaghetti RAT", "Driduplex" ] ;
-
-    // gotta add types here if you add more sounds (or delete them)
-
-    audio_type = [ "starwars", "tng", "b5", "wargames", "pew", "galaga", "asteroids", "china", "timallen" ]
+    attack_type = [ "ls", "USSDelogrand", "Albert looked at the computer",
+					"Rhodes Scholar Special", "Armitage", "Metasploit Hail Mary",
+					"Shadow Realm banishment", "Just ask", "Cyber 9/12",
+					"aliased sudo", "closed southbound ports"] ;
 
     // need this to more easily grab URI query parameters
     $.extend({
@@ -182,43 +168,14 @@ function about() {
     // here is where we deal with parameters
     // try to grab them, see if they exist, make changes to defaults if they do
 
-    var norse_mode = $.getUrlVar('norse_mode');
-    var bad_day = $.getUrlVar('bad_day');
-    var org_name = $.getUrlVar('org_name');
-    var chatt_mode = $.getUrlVar('chatt_mode');
-    var china_mode = $.getUrlVar('china_mode');
-    var dprk_mode = $.getUrlVar('dprk_mode');
-    var employee_mode = $.getUrlVar('employee_mode');
-    var employee_fname = $.getUrlVar('employee_fname');
-    var employee_lname = $.getUrlVar('employee_lname');
     var origin = $.getUrlVar('origin');
     var random_mode = $.getUrlVar('random_mode');
-    var tng = $.getUrlVar('tng');
-    var wargames = $.getUrlVar('wargames');
-    var b5 = $.getUrlVar('b5');
-    var nofx = $.getUrlVar('nofx');
-    var pew = $.getUrlVar('pew');
-    var allfx = $.getUrlVar('allfx')
-    var galaga = $.getUrlVar('galaga')
-    var asteroids = $.getUrlVar('asteroids')
-    var china = $.getUrlVar('china')
-    var timallen = $.getUrlVar('timallen')
     var drill_mode = $.getUrlVar("drill_mode")
     var in_lat = $.getUrlVar("lat")
     var in_lon = $.getUrlVar("lon")
     var destination = $.getUrlVar("destination")
     var greenattacks = $.getUrlVar("greenattacks")
     var redattacks = $.getUrlVar("redattacks")
-
-    snd_id = "starwars" ;
-    if (typeof tng !== 'undefined') { snd_id = "tng" ; }
-    if (typeof b5 !== 'undefined') { snd_id = "b5" ; }
-    if (typeof wargames !== 'undefined') { snd_id = "wargames" ; }
-    if (typeof pew !== 'undefined') { snd_id = "pew" ; }
-    if (typeof galaga !== 'undefined') { snd_id = "galaga" ; }
-    if (typeof asteroids !== 'undefined') { snd_id = "asteroids" ; }
-    if (typeof china !== 'undefined') { snd_id = "china" ; }
-    if (typeof timallen !== 'undefined') { snd_id = "timallen" ; }
 
     if (typeof bad_day !== 'undefined') {
       attack_min=200;
@@ -332,7 +289,8 @@ function about() {
     d3.tsv("country_centroids_primary.csv", function(data) { centers = data; });
     d3.csv("samplatlong.csv", function(data) { slatlong = data; });
     d3.csv("cnlatlong.csv", function(data) { cnlatlong = data; });
-	d3.csv("uslatlong.csv", function(data) { uslatlong = data; });
+	//d3.csv("uslatlong.csv", function(data) { uslatlong = data; });
+	d3.csv("academylocs.csv", function(data) {uslatlong = data; });
 	
     // setup structures for the "hits" (arcs)
     // and circle booms
