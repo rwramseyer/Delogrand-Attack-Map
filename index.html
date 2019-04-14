@@ -217,30 +217,6 @@
         return Math.random() * (max - min) + min;
     };
 
-    var getRandomCountry = function(countries, weight) {
-
-        var total_weight = weight.reduce(function (prev, cur, i, arr) {
-            return prev + cur;
-        });
-
-        var random_num = rand(0, total_weight);
-        var weight_sum = 0;
-
-        for (var i = 0; i < countries.length; i++) {
-            weight_sum += weight[i];
-            weight_sum = +weight_sum.toFixed(2);
-
-            if (random_num <= weight_sum) {
-                return countries[i];
-            }
-        }
-    };
-
-    // need to make this dynamic since it is approximated from sources
-
-    var countries = [9,22,29,49,56,58,78,82,102,117,139,176,186] ;
-    var weight = [0.000,0.001,0.004,0.008,0.009,0.037,0.181,0.002,0.000,0.415,0.006,0.075,0.088];
-
     // the fun begins!
     //
     // pretty simple setup ->
@@ -272,8 +248,8 @@
     })
 
 	// read in files of map location data
-	//d3.csv("uslatlong.csv", function(data) { latlong = data; });
-	d3.csv("academylocs.csv", function(data) {latlong = data; });
+	//d3.csv("src/uslatlong.csv", function(data) { latlong = data; });
+	d3.csv("src/academylocs.csv", function(data) {latlong = data; });
 	
     // setup structures for the "hits" (arcs) and circle booms
     var hits = FixedQueue( 7, [  ] );
@@ -343,7 +319,7 @@
            map.bubbles(boom, {
                 popupTemplate: function(geo, data) {
 				console.log(data);
-                  return '<div class="hoverinfo">' + data.dst + '<br>' + '<img src="img/' + data.dst + '.png"><br>PWNed with: ' + data.attk + '</div>';
+                  return '<div class="hoverinfo">' + data.dst + '<br>' + '<img src="src/' + data.dst + '.png"><br>PWNed with: ' + data.attk + '</div>';
                 }
             });
 
