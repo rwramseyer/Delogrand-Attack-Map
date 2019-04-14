@@ -14,7 +14,7 @@
 		  font-size:48px;
 		  position:fixed;
 		  width:100%;
-		  height:50px;
+		  height:60px;
 		  color:white;
 		  background-color:black;
 		  padding:5px;
@@ -37,8 +37,8 @@
 
 		#container1 {
 		  position: relative;
-		  width: 100vw;
-		  height: 100vh;
+		  width: 95vw;
+		  height: 95vh;
 		  max-width:100%;
 		  max-height:100%
 		}
@@ -125,7 +125,7 @@
 
 	<div id="about">
 		<h3>About</h3>
-		Based on <a href="https://github.com/hrbrmstr/pewpew">IPew Attack Map</a>.
+		Based on <a href="https://github.com/hrbrmstr/pewpew">IPew Attack Map</a> and <a href="https://threatbutt.com/map/">ThreatButt</a>.
 		Customized for NCX 2019.
 	</div>
 
@@ -168,8 +168,12 @@
     });
 
     // get url parameters
+	// determines if other competitors will attack each other
     var all_random = $.getUrlVar('all_random');
+	// increases attack interval
 	var bad_day = $.getUrlVar('bad_day');
+	// allows USAFA to be attackeds
+	var vuln = $.getUrlVar('vuln');
 
     if (typeof bad_day !== 'undefined') {
       attack_min=200;
@@ -280,12 +284,19 @@
 
            var self = this;
 		   
-		   dst = Math.floor((Math.random() * latlong.length));
+		   if (typeof vuln !== 'undefined') {
+				dst = Math.floor((Math.random() * latlong.length));
+		   } else {
+				dst = Math.floor((Math.random() * (latlong.length - 1)));
+		   }
+		   
+		   
 		   
 		   if (typeof all_random !== 'undefined') { 
              src = Math.floor((Math.random() * latlong.length));
 		   } else {
-			 src = 0;
+			 // attacks always from usafa
+			 src = 9;
 		   }
 		   
            if ((dst == src)) {
