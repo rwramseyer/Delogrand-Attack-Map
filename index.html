@@ -1,143 +1,144 @@
 <!DOCTYPE html>
 <head>
-<meta charset="utf-8">
-<style>
-body {
-  margin: 0;
-  padding: 0;
-  background: black;
-}
+	<meta charset="utf-8">
+	<style>
+		body {
+		  margin: 0;
+		  padding: 0;
+		  background: black;
+		}
 
-#titlediv {
-  font-family: monospace;
-  text-align: center;
-  font-size:48px;
-  position:fixed;
-  width:100%;
-  height:50px;
-  color:white;
-  background-color:black;
-  padding:5px;
-  top:0px;
-  overflow-y: auto;
-}
+		#titlediv {
+		  font-family: monospace;
+		  text-align: center;
+		  font-size:48px;
+		  position:fixed;
+		  width:100%;
+		  height:50px;
+		  color:white;
+		  background-color:black;
+		  padding:5px;
+		  top:0px;
+		  overflow-y: auto;
+		}
 
-#attackdiv {
-  font-family: monospace;
-  font-size:10px;
-  position:fixed;
-  width:50%;
-  height:100px;
-  color:white;
-  background-color:black;
-  padding:5px;
-  bottom:0px;
-  overflow-y: auto;
-}
+		#attackdiv {
+		  font-family: monospace;
+		  font-size:10px;
+		  position:fixed;
+		  width:50%;
+		  height:100px;
+		  color:white;
+		  background-color:black;
+		  padding:5px;
+		  bottom:0px;
+		  overflow-y: auto;
+		}
 
-#container1 {
-  position: relative;
-  width: 100vw;
-  height: 100vh;
-  max-width:100%;
-  max-height:100%
-}
+		#container1 {
+		  position: relative;
+		  width: 100vw;
+		  height: 100vh;
+		  max-width:100%;
+		  max-height:100%
+		}
 
-#about {
-  display: hidden;
-}
+		#about {
+		  display: hidden;
+		}
 
-#aboutdiv {
-  text-align:right;
-  width:100px;
-  height:100px;
-  top:0px;
-  right:0px;
-  position:fixed;
-  padding:10px;
-  color: white;
-}
+		#aboutdiv {
+		  text-align:right;
+		  width:100px;
+		  height:100px;
+		  top:0px;
+		  right:0px;
+		  position:fixed;
+		  padding:10px;
+		  color: white;
+		}
 
-#ccdiv {
-  text-align:right;
-  width:100px;
-  height:20px;
-  bottom:0px;
-  right:0px;
-  position:fixed;
-  padding:5px;
-  color: white;
-}
+		#ccdiv {
+		  text-align:right;
+		  width:100px;
+		  height:20px;
+		  bottom:0px;
+		  right:0px;
+		  position:fixed;
+		  padding:5px;
+		  color: white;
+		}
 
-#about {display:none;}
+		#about {display:none;}
 
-/* Overlay */
-#simplemodal-overlay {background-color:#000;}
+		/* Overlay */
+		#simplemodal-overlay {background-color:#000;}
 
-/* Container */
-#simplemodal-container {height:460px; width:600px; color:#bbb; background-color:#333; border:4px solid #444; padding:12px;}
-#simplemodal-container .simplemodal-data {padding:8px;}
-#simplemodal-container code {background:#141414; border-left:3px solid #65B43D; color:#bbb; display:block; font-size:12px; margin-bottom:12px; padding:4px 6px 6px;}
-#simplemodal-container a {color:#ddd;}
-#simplemodal-container a.modalCloseImg {background:url(../img/basic/x.png) no-repeat; width:25px; height:29px; display:inline; z-index:3200; position:absolute; top:-15px; right:-16px; cursor:pointer;}
-#simplemodal-container h3 {color:#84b8d9;}
-#simplemodal-container a.modalCloseImg {
-  background:url(x.png) no-repeat; /* adjust url as required */
-  width:25px;
-  height:29px;
-  display:inline;
-  z-index:3200;
-  position:absolute;
-  top:-15px;
-  right:-18px;
-  cursor:pointer;
-}
+		/* Container */
+		#simplemodal-container {height:460px; width:600px; color:#bbb; background-color:#333; border:4px solid #444; padding:12px;}
+		#simplemodal-container .simplemodal-data {padding:8px;}
+		#simplemodal-container code {background:#141414; border-left:3px solid #65B43D; color:#bbb; display:block; font-size:12px; margin-bottom:12px; padding:4px 6px 6px;}
+		#simplemodal-container a {color:#ddd;}
+		#simplemodal-container a.modalCloseImg {background:url(../img/basic/x.png) no-repeat; width:25px; height:29px; display:inline; z-index:3200; position:absolute; top:-15px; right:-16px; cursor:pointer;}
+		#simplemodal-container h3 {color:#84b8d9;}
+		#simplemodal-container a.modalCloseImg {
+		  background:url(x.png) no-repeat; /* adjust url as required */
+		  width:25px;
+		  height:29px;
+		  display:inline;
+		  z-index:3200;
+		  position:absolute;
+		  top:-15px;
+		  right:-18px;
+		  cursor:pointer;
+		}
+	</style>
 
-</style>
+	<script src="https://d3js.org/d3.v3.min.js"></script>
+	<script src="https://d3js.org/d3.geo.projection.v0.min.js"></script>
+	<script src="https://d3js.org/topojson.v1.min.js"></script>
+	<script src="https://datamaps.github.io/scripts/datamaps.usa.min.js"></script>
+	<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+	<script src="jquery.simplemodal-1.4.4.js"></script>
 
-<script src="https://d3js.org/d3.v3.min.js"></script>
-<script src="https://d3js.org/d3.geo.projection.v0.min.js"></script>
-<script src="https://d3js.org/topojson.v1.min.js"></script>
-<script src="https://datamaps.github.io/scripts/datamaps.usa.min.js"></script>
-<script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-<script src="jquery.simplemodal-1.4.4.js"></script>
+	<script>
+		function about() {
+		  $("#about").modal();
+		}
+	</script>
 
-<script>
-function about() {
-  $("#about").modal();
-}
-</script>
-
-<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
-
+	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
 </head>
 
 <body>
+	<center><div id="container1"></div></center>
 
-  <center><div id="container1"></div></center>
+	<div id="titlediv">Delogrand Attack Map</div>
+	<div id="attackdiv"></div>
+	<div id="aboutdiv">
+		<i class="fa fa-question-circle fa-2x" onClick="about();"></i>
+	</div>
 
-  <div id="titlediv">Delogrand Attack Map</div>
-  <div id="attackdiv"></div>
-  <div id="aboutdiv"><i class="fa fa-question-circle fa-2x" onClick="about();"></i></div>
+	<div id="ccdiv">
+	<a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/80x15.png" /></a>
+	</div>
 
-  <div id="ccdiv">
-  <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/80x15.png" /></a>
-  </div>
+	<div id="about">
+		<h3>About</h3>
+		Based on <a href="https://github.com/hrbrmstr/pewpew">IPew Attack Map</a>.
+		Customized for NCX 2019.
+	</div>
 
-  <div id="about">
-  <h3>About IPew</h3>
-  This is a thing.
-  </div>
-
-  <!-- Use Hash-Bang to maintain scroll position when closing modal -->
-  <a href="#!" class="modal-close" title="Close this modal"
-      data-dismiss="modal" data-close="Close">&times;</a>
+	<!-- Use Hash-Bang to maintain scroll position when closing modal -->
+	<a href="#!" class="modal-close" title="Close this modal"
+		data-dismiss="modal" data-close="Close">&times;
+	</a>
 </section>
 
 
-  <script>
+<script>
 
-    // setup default min/max timer range for random draw
+	// setup default min/max timer range for random draw
     attack_min = 100 ;
     attack_max = 2000 ;
 
@@ -145,7 +146,8 @@ function about() {
     attack_type = [ "ls", "USSDelogrand", "Albert looked at the computer",
 					"Rhodes Scholar Special", "Armitage", "Metasploit Hail Mary",
 					"Shadow Realm banishment", "Just ask", "Cyber 9/12",
-					"aliased sudo", "closed southbound ports"] ;
+					"aliased sudo", "closed southbound ports", "boi genius blast",
+					"table top exercise"];
 
     // need this to more easily grab URI query parameters
     $.extend({
@@ -165,24 +167,14 @@ function about() {
       }
     });
 
-    // here is where we deal with parameters
-    // try to grab them, see if they exist, make changes to defaults if they do
-
-    var origin = $.getUrlVar('origin');
-    var random_mode = $.getUrlVar('random_mode');
-    var drill_mode = $.getUrlVar("drill_mode")
-    var in_lat = $.getUrlVar("lat")
-    var in_lon = $.getUrlVar("lon")
-    var destination = $.getUrlVar("destination")
-    var greenattacks = $.getUrlVar("greenattacks")
-    var redattacks = $.getUrlVar("redattacks")
+    // get url parameters
+    var all_random = $.getUrlVar('all_random');
+	var bad_day = $.getUrlVar('bad_day');
 
     if (typeof bad_day !== 'undefined') {
       attack_min=200;
       attack_max=200;
     }
-
-    if (typeof org_name !== 'undefined') { $("#titlediv").text(decodeURI(org_name) + " IPew Attack Map").html() }
 
     // we maintain a fixed queue of "attacks" via this class
     function FixedQueue( size, initialValues ){
@@ -242,7 +234,6 @@ function about() {
                 return countries[i];
             }
         }
-
     };
 
     // need to make this dynamic since it is approximated from sources
@@ -261,40 +252,30 @@ function about() {
 
         scope: 'usa',
         element: document.getElementById('container1'),
-        //projection: 'winkel3',
-        // change the projection to something else only if you have absolutely no cartographic sense
 
         fills: { defaultFill: 'black', },
 
         geographyConfig: {
           dataUrl: null,
-          //hideAntarctica: true,
           borderWidth: 0.75,
           borderColor: '#4393c3',
           popupTemplate: function(geography, data) {
             return '<div class="hoverinfo" style="color:white;background:black">' +
                    geography.properties.name + '</div>';
-          },
+          },		  
           popupOnHover: true,
           highlightOnHover: false,
           highlightFillColor: 'black',
           highlightBorderColor: 'rgba(250, 15, 160, 0.2)',
           highlightBorderWidth: 2
         },
+    })
 
-      })
-
-    // we read in a modified file of all country centers
-    var centers = [] ;
-    d3.tsv("country_centroids_primary.csv", function(data) { centers = data; });
-    d3.csv("samplatlong.csv", function(data) { slatlong = data; });
-    d3.csv("cnlatlong.csv", function(data) { cnlatlong = data; });
-	//d3.csv("uslatlong.csv", function(data) { uslatlong = data; });
-	d3.csv("academylocs.csv", function(data) {uslatlong = data; });
+	// read in files of map location data
+	//d3.csv("uslatlong.csv", function(data) { latlong = data; });
+	d3.csv("academylocs.csv", function(data) {latlong = data; });
 	
-    // setup structures for the "hits" (arcs)
-    // and circle booms
-
+    // setup structures for the "hits" (arcs) and circle booms
     var hits = FixedQueue( 7, [  ] );
     var boom = FixedQueue( 7, [  ] );
 
@@ -322,51 +303,47 @@ function about() {
        getData: function() {
 
            var self = this;
-
-           if (typeof norse_mode !== 'undefined') { return; }
-
-           if (typeof random_mode !== 'undefined') { Math.floor((Math.random() * uslatlong.length)); }
-
-           dst = Math.floor((Math.random() * uslatlong.length));
-           src = Math.floor((Math.random() * uslatlong.length));
-
+		   
+		   dst = Math.floor((Math.random() * latlong.length));
+		   
+		   if (typeof all_random !== 'undefined') { 
+             src = Math.floor((Math.random() * latlong.length));
+		   } else {
+			 src = 0;
+		   }
+		   
            if ((dst == src)) {
             dst = src + 1 ;
-            if (dst > uslatlong.length-1) { dst = src - 1 }
+            if (dst > latlong.length-1) { dst = src - 1 }
            }
 
            // add hit to the arc queue
            // use strokeColor to set arc line color
 
-           var srclat = uslatlong[src].lat;
-           var srclong = uslatlong[src].long;
-           var dstlat = uslatlong[dst].lat;
-           var dstlong = uslatlong[dst].long;
+           var srclat = latlong[src].lat;
+           var srclong = latlong[src].long;
+           var dstlat = latlong[dst].lat;
+           var dstlong = latlong[dst].long;
            which_attack = attack_type[Math.floor((Math.random() * attack_type.length))];
-           var srccountry = uslatlong[src]["country"];
+           var srccountry = latlong[src]["country"];
            
-           attackdiv_slatlong = uslatlong[dst]["country"];
+           attackdiv_slatlong = latlong[dst]["country"];
 
            // Specify attack color
            strokeColor = 'red';
 
-           if (typeof drill_mode != 'undefined') {
-
-              dstlat = in_lat
-              dstlong = in_lon
-           }
-
+		   // add to hits queue
            hits.push( { origin : { latitude: +srclat, longitude: +srclong },
                         destination : { latitude: +dstlat, longitude: +dstlong } } );
            map.arc(hits, {strokeWidth: 2, strokeColor: strokeColor});
 
            // add boom to the bubbles queue
-
            boom.push( { radius: 7, latitude: +dstlat, longitude: +dstlong,
-                        fillOpacity: 0.5, attk: which_attack} );
+                        fillOpacity: 0.5, attk: which_attack, dst: attackdiv_slatlong} );
            map.bubbles(boom, {
                 popupTemplate: function(geo, data) {
-                  return '<div class="hoverinfo">' + data.attk + '</div>';
+				console.log(data);
+                  return '<div class="hoverinfo">' + data.dst + '<br>' + '<img src="img/' + data.dst + '.png"><br>PWNed with: ' + data.attk + '</div>';
                 }
             });
 
@@ -382,7 +359,6 @@ function about() {
            this.interval = getRandomInt(attack_min, attack_max);
            this.init() ;
        },
-
     };
 
     // start the ball rolling!
@@ -392,6 +368,6 @@ function about() {
     d3.select(window).on('resize', function() { location.reload(); });
 
 </script>
-   
+
 </body>
 </html>
