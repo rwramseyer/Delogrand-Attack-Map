@@ -240,8 +240,12 @@
           borderWidth: 0.75,
           borderColor: '#4393c3',
           popupTemplate: function(geography, data) {
-            return '<div class="hoverinfo" style="color:white;background:black">' +
+			if (geography.properties.name !== "Colorado") {
+				return '<div class="hoverinfo" style="color:white;background:black">' +
                    geography.properties.name + '</div>';
+			} else {
+				return '<div class="hoverinfo">Air Force Academy<br><img src="src/Air Force Academy.png"></div>';
+			}
           },		  
           popupOnHover: true,
           highlightOnHover: false,
@@ -329,7 +333,6 @@
                         fillOpacity: 0.5, attk: which_attack, dst: attackdiv_slatlong} );
            map.bubbles(boom, {
                 popupTemplate: function(geo, data) {
-				console.log(data);
                   return '<div class="hoverinfo">' + data.dst + '<br>' + '<img src="src/' + data.dst + '.png"><br>PWNed with: ' + data.attk + '</div>';
                 }
             });
